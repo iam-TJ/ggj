@@ -1,0 +1,4 @@
+Wifi
+  SSID: GJ
+  WPA2 TKIP: gladiatorsready
+
