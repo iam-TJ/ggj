@@ -4,25 +4,22 @@
   <title>What Do We Do Now?</title>
   <meta charset="utf-8"/>
   <link rel="stylesheet" type="text/css" href="styles.css"/>
-  <script type="text/javascript" src="main.js"></script>
-  <script src="assets/script/paper.js"></script>
+  <script data-main="main" type="text/javascript" src="assets/script/require.js"></script>
  </head>
- <body onload="loader()">
+ <body>
   <h1>What Do We Do Now?</h1>
    <p><code>A homage to simple addicitive video games of yesteryear</code></p>
    <hr/>
-   <div class="assets">
-     <svg id="earth_cartoon" xmlns="http://wwww.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <image xlink:href="assets/earth-cartoon.svg" height="1" width="1" />
-     </svg>
-   </div>
    <div id="cabinet">
-     <p>Status: <span id="status"></span></p>
-    <canvas id="screen" resize="true" />
+     <canvas id="screen" style="border:1px dotted red" resize="false"></canvas>
    </div>
   <footer>
   <hr/>
-  <p>Developed by the WITNOTT team (Barend, Rémi, Spencer, TJ). Some of the game assets are covered by copyright licenses; please see our <a href="copyright.html">list of attributions</a>.</p>
+  <p>Developed by the WITNOTT team (Anja, Bernadette, Barend, Rémi, Spencer, TJ). Some of the game assets are covered by copyright licenses; please see our <a href="copyright.html">list of attributions</a>.</p>
+     <p>Status:<br/>
+     <span id="status-2" class="status"></span><br/>
+      <span id="status-1" class="status"></span>
+     </p>
   </footer>
  </body>
 </html>

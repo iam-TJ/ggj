@@ -1,3 +1,5 @@
 body {font-family:sans-serif;}
-.assets {display:none; visibility:hidden}
-#status {font-family:monospace; color:green}
+.assets {display:none; }
+.status {font-family:monospace; color:green}
+#screen {background-color: black;}
+
