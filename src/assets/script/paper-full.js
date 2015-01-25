@@ -6471,87 +6471,89 @@ var PathItem = Item.extend({
 		}
 
 		this.clear();
-
-		for (var i = 0, l = parts.length; i < l; i++) {
-			var part = parts[i],
-				command = part[0],
-				lower = command.toLowerCase();
-			coords = part.match(/[+-]?(?:\d*\.\d+|\d+\.?)(?:[eE][+-]?\d+)?/g);
-			var length = coords && coords.length;
-			relative = command === lower;
-			if (previous === 'z' && !/[mz]/.test(lower))
-				this.moveTo(current = start);
-			switch (lower) {
-			case 'm':
-			case 'l':
-				var move = lower === 'm';
-				if (move && previous && previous !== 'z')
-					this.closePath(true);
-				for (var j = 0; j < length; j += 2)
-					this[j === 0 && move ? 'moveTo' : 'lineTo'](
-							current = getPoint(j));
-				control = current;
-				if (move)
-					start = current;
-				break;
-			case 'h':
-			case 'v':
-				var coord = lower === 'h' ? 'x' : 'y';
-				for (var j = 0; j < length; j++) {
-					current[coord] = getCoord(j, coord);
-					this.lineTo(current);
-				}
-				control = current;
-				break;
-			case 'c':
-				for (var j = 0; j < length; j += 6) {
-					this.cubicCurveTo(
-							getPoint(j),
-							control = getPoint(j + 2),
-							current = getPoint(j + 4));
-				}
-				break;
-			case 's':
-				for (var j = 0; j < length; j += 4) {
-					this.cubicCurveTo(
-							/[cs]/.test(previous)
-									? current.multiply(2).subtract(control)
-									: current,
-							control = getPoint(j),
-							current = getPoint(j + 2));
-					previous = lower;
-				}
-				break;
-			case 'q':
-				for (var j = 0; j < length; j += 4) {
-					this.quadraticCurveTo(
-							control = getPoint(j),
-							current = getPoint(j + 2));
-				}
-				break;
-			case 't':
-				for (var j = 0; j < length; j += 2) {
-					this.quadraticCurveTo(
-							control = (/[qt]/.test(previous)
-									? current.multiply(2).subtract(control)
-									: current),
-							current = getPoint(j));
-					previous = lower;
-				}
-				break;
-			case 'a':
-				for (var j = 0; j < length; j += 7) {
-					this.arcTo(current = getPoint(j + 5),
-							new Size(+coords[0], +coords[1]),
-							+coords[2], +coords[4], +coords[3]);
-				}
-				break;
-			case 'z':
-				this.closePath(true);
-				break;
-			}
-			previous = lower;
-		}
+    
+    if (parts) {
+      for (var i = 0, l = parts.length; i < l; i++) {
+        var part = parts[i],
+          command = part[0],
+          lower = command.toLowerCase();
+        coords = part.match(/[+-]?(?:\d*\.\d+|\d+\.?)(?:[eE][+-]?\d+)?/g);
+        var length = coords && coords.length;
+        relative = command === lower;
+        if (previous === 'z' && !/[mz]/.test(lower))
+          this.moveTo(current = start);
+        switch (lower) {
+        case 'm':
+        case 'l':
+          var move = lower === 'm';
+          if (move && previous && previous !== 'z')
+            this.closePath(true);
+          for (var j = 0; j < length; j += 2)
+            this[j === 0 && move ? 'moveTo' : 'lineTo'](
+                current = getPoint(j));
+          control = current;
+          if (move)
+            start = current;
+          break;
+        case 'h':
+        case 'v':
+          var coord = lower === 'h' ? 'x' : 'y';
+          for (var j = 0; j < length; j++) {
+            current[coord] = getCoord(j, coord);
+            this.lineTo(current);
+          }
+          control = current;
+          break;
+        case 'c':
+          for (var j = 0; j < length; j += 6) {
+            this.cubicCurveTo(
+                getPoint(j),
+                control = getPoint(j + 2),
+                current = getPoint(j + 4));
+          }
+          break;
+        case 's':
+          for (var j = 0; j < length; j += 4) {
+            this.cubicCurveTo(
+                /[cs]/.test(previous)
+                    ? current.multiply(2).subtract(control)
+                    : current,
+                control = getPoint(j),
+                current = getPoint(j + 2));
+            previous = lower;
+          }
+          break;
+        case 'q':
+          for (var j = 0; j < length; j += 4) {
+            this.quadraticCurveTo(
+                control = getPoint(j),
+                current = getPoint(j + 2));
+          }
+          break;
+        case 't':
+          for (var j = 0; j < length; j += 2) {
+            this.quadraticCurveTo(
+                control = (/[qt]/.test(previous)
+                    ? current.multiply(2).subtract(control)
+                    : current),
+                current = getPoint(j));
+            previous = lower;
+          }
+          break;
+        case 'a':
+          for (var j = 0; j < length; j += 7) {
+            this.arcTo(current = getPoint(j + 5),
+                new Size(+coords[0], +coords[1]),
+                +coords[2], +coords[4], +coords[3]);
+          }
+          break;
+        case 'z':
+          this.closePath(true);
+          break;
+        }
+        previous = lower;
+      }
+    }
 	},
 
 	_canComposite: function() {
