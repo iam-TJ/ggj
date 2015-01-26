@@ -1,4 +1,4 @@
-body {font-family:sans-serif;}
+body { margin:0; overflow: hidden; font-family:sans-serif;}
 .assets {display:none; }
 .status {font-family:monospace; color:green}
 #screen {background-color: black;}
