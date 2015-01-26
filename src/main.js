@@ -21,6 +21,12 @@ require(["assets/script/paper-full"],
         }
 );
 
+
+requirejs.onError = function (err) {
+  console.log(err.requireType);
+  done = true;
+};
+
 var done = false; // flag used to indicate each mini-game has completed
 
 // wait for a mini-game to complete before starting the next mini-game
@@ -44,43 +50,51 @@ function game_controller() {
 
 function game_intro() {
   done = false;
-  require(['assets/script/intro' ], function(intro) { });
+  require(['assets/script/intro' ], function(intro) { }, function (err) { done = true; });
   is_done(game_harvest);
 }
 
 function game_harvest() {
-  require(['assets/script/harvest' ], function(harvest) { done = false; });
+  done = false;
+  require(['assets/script/harvest' ], function(harvest) { }, function(err) { console.log('harvest.js not found'); done = true; });
   is_done(game_assemble);
 }  
 
 function game_assemble() {
-  require(['assets/script/assemble' ], function(assemble) { done = false; });
+  done = false;
+  require(['assets/script/assemble' ], function(assemble) { }, function (err) { done = true; });
   is_done(game_launch);
 }
 
 function game_launch() {
   done = false;
-  require(['assets/script/launch' ], function(launch) { });
-  is_done(game_land);
+  require(['assets/script/launch' ], function(launch) { }, function (err) { done = true; });
+    is_done(lib_perlin);
 }
 
 
-function game_land() {
+function lib_perlin() {
   done = false;
-  require(['assets/script/land' ], function(land) { });
+  require(['assets/script/perlin'], function (perlin) { done = true; }, function (err) { console.log('failed to load Perlin'); });
+  is_done(game_lander);
+}
+
+function game_lander() {
+  done = false;
+  require(['assets/script/lander' ], function(lander) { }, function (err) { done = true; });
   is_done(game_avoid);
 }
 
 
 function game_avoid() {
   done = false;
-  require(['assets/script/avoid' ], function(avoid) { });
+  require(['assets/script/avoid' ], function(avoid) { }, function (err) { done = true;});
   is_done(game_bonus);
 }
 
 function game_bonus() {
   done = false;
-  require(['assets/script/bonus' ], function(bonus)  { });
+  require(['assets/script/bonus' ], function(bonus) { }, function (err) { done = true; });
 }
 
 function loader() {
